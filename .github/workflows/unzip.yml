@@ -1,0 +1,22 @@
+name: Descomprimir ZIP
+on:
+  push:
+    paths:
+      - '*.zip'
+jobs:
+  unzip:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Unzip file
+        run: |
+          unzip -o DOC-20261015-WA0007.zip
+          rm DOC-20261015-WA0007.zip
+      - name: Commit changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          git commit -m "Carpetas descomprimidas automáticamente" || exit 0
+          git push
